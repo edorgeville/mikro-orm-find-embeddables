@@ -25,6 +25,7 @@ const entrypoint = async () => {
   await orm.em.persistAndFlush(order)
 
   console.log('find the order from the package')
+  // ValidationError: Using operators inside embeddables is not allowed, move the operator above. (property: Order.packages, payload: { packages: { '$in': [ [Package] ] } })
   console.log(await orm.em.findOne(entities.Order, { packages: [inefficientPackage] }))
 }
 
