@@ -1,7 +1,7 @@
 # mikro-orm-find-embeddables
 ## 
 
-<!-- Related GH discussion: https://github.com/mikro-orm/mikro-orm/discussions/2037 -->
+Related GH discussion: https://github.com/mikro-orm/mikro-orm/discussions/3530
 
 ### Getting started
 ```
