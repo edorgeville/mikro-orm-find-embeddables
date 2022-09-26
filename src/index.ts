@@ -25,8 +25,18 @@ const entrypoint = async () => {
   await orm.em.persistAndFlush(order)
 
   console.log('find the order from the package')
-  // ValidationError: Using operators inside embeddables is not allowed, move the operator above. (property: Order.packages, payload: { packages: { '$in': [ [Package] ] } })
-  console.log(await orm.em.findOne(entities.Order, { packages: [inefficientPackage] }))
+  const packages = [inefficientPackage]
+  console.log(await orm.em.findOne(entities.Order, { packages: { $eq: packages } })) // null
+
+  console.log('find the order from the package ids')
+  const packagesUsingIds = packages.map((p) => {
+    return {
+      packaging: p.packaging._id,
+      content: p.content._id
+    }
+  })
+  // @ts-expect-error Argument of type '{ packages: { $eq: { packaging: ObjectId; content: ObjectId; }[]; }; }' is not assignable to parameter of type 'FilterQuery<Order>'.
+  console.log(await orm.em.findOne(entities.Order, { packages: { $eq: packagesUsingIds } })) // found!
 }
 
 entrypoint()
